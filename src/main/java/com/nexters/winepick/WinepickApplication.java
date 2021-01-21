@@ -1,13 +1,13 @@
-package com.nexters.winemagic;
+package com.nexters.winepick;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WinemagicApplication {
+public class WinepickApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(WinemagicApplication.class, args);
+    SpringApplication.run(WinepickApplication.class, args);
   }
 
 }

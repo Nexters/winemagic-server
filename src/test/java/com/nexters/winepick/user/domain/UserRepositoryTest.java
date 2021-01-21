@@ -1,6 +1,6 @@
-package com.nexters.winemagic.user.domain;
+package com.nexters.winepick.user.domain;
 
-import static com.nexters.winemagic.user.domain.User.Gender.FEMALE;
+import static com.nexters.winepick.user.domain.User.Gender.FEMALE;
 import static org.assertj.core.api.BDDAssertions.then;
 
 

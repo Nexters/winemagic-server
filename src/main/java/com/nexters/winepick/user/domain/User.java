@@ -1,6 +1,5 @@
-package com.nexters.winemagic.user.domain;
+package com.nexters.winepick.user.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

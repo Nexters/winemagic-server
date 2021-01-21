@@ -1,4 +1,4 @@
-package com.nexters.winemagic.user.api;
+package com.nexters.winepick.user.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

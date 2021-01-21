@@ -1,4 +1,4 @@
-package com.nexters.winemagic.user.domain;
+package com.nexters.winepick.user.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
