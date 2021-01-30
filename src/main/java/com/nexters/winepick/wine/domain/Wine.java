@@ -1,9 +1,15 @@
 package com.nexters.winepick.wine.domain;
 
+import com.nexters.winepick.like.domain.Likes;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,6 +58,9 @@ public class Wine {
   private String suitEvent;
 
   private String suitFood;
+
+  @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL)
+  private List<Likes> likes;
 
   @Builder
   public Wine(String nmKor, String nmEng, String country, Long price, String ingredient,
