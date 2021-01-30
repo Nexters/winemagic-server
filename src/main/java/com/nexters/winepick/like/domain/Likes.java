@@ -1,6 +1,7 @@
 package com.nexters.winepick.like.domain;
 
 import com.nexters.winepick.base.BaseEntity;
+import com.nexters.winepick.user.domain.User;
 import com.nexters.winepick.wine.domain.Wine;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -30,25 +31,27 @@ public class Likes extends BaseEntity implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  private Integer userId;
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "wine_id")
   private Wine wine;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private User user;
 
   @Enumerated(EnumType.STRING)
   @Setter
   private UseYn useYn;
 
   @Builder
-  public Likes(Integer userId, Wine wine, UseYn useYn) {
-    this.userId = userId;
+  public Likes(User user, Wine wine, UseYn useYn) {
+    this.user = user;
     this.wine = wine;
     this.useYn = useYn;
   }
 
-  public static Likes of(Integer userId, Wine wine, UseYn useYn) {
-    return new Likes(userId, wine, useYn);
+  public static Likes of(User user, Wine wine, UseYn useYn) {
+    return new Likes(user, wine, useYn);
   }
 
 }

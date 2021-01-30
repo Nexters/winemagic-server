@@ -21,7 +21,7 @@ public class WineService {
   }
 
   public WineResponse getWine(Integer wineId) {
-    Wine wine = wineRepository.findWineById(wineId)
+    Wine wine = wineRepository.findById(wineId)
         .orElseThrow(() -> new WineNotFoundException(wineId));
     return WineResponse.of(wine);
   }

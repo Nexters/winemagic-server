@@ -3,6 +3,9 @@ package com.nexters.winepick.like.service;
 import com.nexters.winepick.like.domain.Likes;
 import com.nexters.winepick.like.domain.Likes.UseYn;
 import com.nexters.winepick.like.domain.LikesRepository;
+import com.nexters.winepick.user.domain.User;
+import com.nexters.winepick.user.domain.UserRepository;
+import com.nexters.winepick.user.exception.UserNotFoundException;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import com.nexters.winepick.wine.domain.Wine;
 import com.nexters.winepick.wine.domain.WineRepository;
@@ -18,6 +21,7 @@ public class LikesService {
 
   private LikesRepository likesRepository;
   private WineRepository wineRepository;
+  private UserRepository userRepository;
 
   public List<WineResponse> getLikesWineList(Integer userId) {
     return likesRepository.getLikesWineList(userId)
@@ -34,9 +38,11 @@ public class LikesService {
 
     // 처음 좋아요 하는 경우
     if (!likesRepository.existsLikesByUserIdAndWineId(userId, wineId)) {
-      Wine wine = wineRepository.findWineById(wineId)
+      Wine wine = wineRepository.findById(wineId)
           .orElseThrow(() -> new WineNotFoundException(wineId));
-      likesRepository.save(Likes.of(userId, wine, UseYn.Y));
+      User user = userRepository.findById(userId)
+          .orElseThrow(() -> new UserNotFoundException(userId));
+      likesRepository.save(Likes.of(user, wine, UseYn.Y));
     }
   }
 

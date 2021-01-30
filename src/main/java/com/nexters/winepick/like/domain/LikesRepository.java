@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface LikesRepository extends JpaRepository<Likes, Long> {
-  @Query("select w from Wine w join fetch w.likes l where l.userId = :userId and l.useYn = 'Y'")
+  @Query("select w from Wine w join fetch w.likes l where l.user.id = :userId and l.useYn = 'Y'")
   List<Wine> getLikesWineList(@Param("userId") Integer userId);
 
   boolean existsLikesByUserIdAndWineId(Integer userId, Integer wineId);

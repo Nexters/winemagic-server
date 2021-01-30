@@ -23,26 +23,4 @@ public class LikesRepositoryTest {
   @Autowired
   WineRepository wineRepository;
 
-  @Test
-  void save() {
-
-//    Likes likes = likesRepository.findLikesByUserIdAndWineId(1, 1);
-//    assertThat(likes.getUserId()).isEqualTo(1);
-//    assertThat(likes.getWine().getId()).isEqualTo(1);
-
-    Wine wine = wineRepository.findWineById(3)
-        .orElseThrow(() -> new WineNotFoundException(3));
-
-    Likes like = Likes.builder()
-        .userId(1)
-        .wine(wine)
-        .useYn(UseYn.Y)
-        .build();
-    likesRepository.save(like);
-
-    then(like)
-        .hasFieldOrPropertyWithValue("userId", 1)
-        .hasFieldOrPropertyWithValue("useYn", UseYn.Y);
-
-  }
 }
