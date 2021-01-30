@@ -1,4 +1,4 @@
-package com.nexters.winepick.survey.controller;
+package com.nexters.winepick.survey.api;
 
 
 import org.springframework.web.bind.annotation.RestController;
