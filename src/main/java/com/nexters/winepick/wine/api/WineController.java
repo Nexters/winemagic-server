@@ -1,5 +1,6 @@
 package com.nexters.winepick.wine.api;
 
+import com.nexters.winepick.base.BaseDataJsonResponse;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import com.nexters.winepick.wine.service.WineService;
 import java.util.List;
@@ -17,15 +18,15 @@ public class WineController {
   private final WineService wineService;
 
   @GetMapping
-  public List<WineResponse> getWineList() {
+  public BaseDataJsonResponse<List<WineResponse>> getWineList() {
     List<WineResponse> wines = wineService.getWineList();
-    return wines;
+    return new BaseDataJsonResponse<>(200, "0", wines);
   }
 
   @GetMapping("/{wineId}")
-  public WineResponse getWine(@PathVariable Integer wineId) {
+  public BaseDataJsonResponse<WineResponse> getWine(@PathVariable Integer wineId) {
     WineResponse wine = wineService.getWine(wineId);
-    return wine;
+    return new BaseDataJsonResponse<>(200, "0", wine);
   }
 
 
