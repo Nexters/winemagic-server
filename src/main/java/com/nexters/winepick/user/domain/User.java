@@ -34,9 +34,6 @@ public class User {
   @Enumerated(EnumType.STRING)
   private Gender gender;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  private List<Likes> likes;
-
   @Builder
   public User(String email, int ageRange, Gender gender) {
     this.email = email;

@@ -28,13 +28,11 @@ public class Likes {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Integer userId;
+
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "wine_id")
   private Wine wine;
-
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "user_id")
-  private User user;
 
   @Enumerated(EnumType.STRING)
   private UseYn useYn;
