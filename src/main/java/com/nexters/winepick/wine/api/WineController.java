@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/wine")
+@RequestMapping("/api/v1/wine")
 @RequiredArgsConstructor
 public class WineController {
 

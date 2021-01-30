@@ -30,10 +30,12 @@ public class WineResponse {
 
   private Integer tannin;
 
+  private String suitFood;
+
   public static WineResponse of(Wine wine) {
     return new WineResponse(wine.getId(), wine.getNmKor(), wine.getNmEng(), wine.getCountry(),
         wine.getPrice(), wine.getCategory(), wine.getSweetness(), wine.getAcidity(), wine.getBody(),
-        wine.getTannin());
+        wine.getTannin(), wine.getSuitFood());
   }
 
 }
