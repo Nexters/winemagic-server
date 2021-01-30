@@ -5,19 +5,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Survey extends BaseEntity {
+public class Answer extends BaseEntity {
+
+    public enum AnswerType {
+        // TODO => We might update answer types' information.
+        A, B, C, D, E, F
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String content;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="answer_id")
-    private List<Answer> Answers;
+    @Enumerated(EnumType.STRING)
+    private AnswerType answerType;
 }
