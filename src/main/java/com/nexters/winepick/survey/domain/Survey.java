@@ -19,5 +19,5 @@ public class Survey extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="answer_id")
-    private List<Answer> Answers;
+    private List<Answer> answers;
 }

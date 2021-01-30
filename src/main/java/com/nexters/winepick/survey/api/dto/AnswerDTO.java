@@ -5,10 +5,29 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
 public class AnswerDTO {
     private String content;
 
     private AnswerType answerType;
+
+    public AnswerDTO(String content, AnswerType answerType) {
+        this.content = content;
+        this.answerType = answerType;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public AnswerType getAnswerType() {
+        return answerType;
+    }
+
+    public void setAnswerType(AnswerType answerType) {
+        this.answerType = answerType;
+    }
 }
