@@ -1,9 +1,15 @@
 package com.nexters.winepick.wine.domain;
 
+import com.nexters.winepick.like.domain.Likes;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,15 +31,17 @@ public class Wine {
 
   private Long price;
 
-  private String kind;
+  private String ingredient;
 
   private String category;
 
   private String usage;
 
+  private String store;
+
   private double degree;
 
-  private String drinkingTemper;
+  private String suitTemper;
 
   private Integer sweetness;
 
@@ -43,26 +51,39 @@ public class Wine {
 
   private Integer tannin;
 
-  private String suitDish;
+  private String feeling;
+
+  private String suitWho;
+
+  private String suitEvent;
+
+  private String suitFood;
+
+  @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL)
+  private List<Likes> likes;
 
   @Builder
-  public Wine(String nmKor, String nmEng, String country, Long price, String kind,
-      String category, String usage, double degree, String drinkingTemper, Integer sweetness,
-      Integer acidity, Integer body, Integer tannin, String suitDish) {
+  public Wine(String nmKor, String nmEng, String country, Long price, String ingredient,
+      String category, String usage, double degree, String suitTemper, Integer sweetness,
+      Integer acidity, Integer body, Integer tannin, String feeling, String suitWho,
+      String suitEvent, String suitFood) {
     this.nmKor = nmKor;
     this.nmEng = nmEng;
     this.country = country;
     this.price = price;
-    this.kind = kind;
+    this.ingredient = ingredient;
     this.category = category;
     this.usage = usage;
     this.degree = degree;
-    this.drinkingTemper = drinkingTemper;
+    this.suitTemper = suitTemper;
     this.sweetness = sweetness;
     this.acidity = acidity;
     this.body = body;
     this.tannin = tannin;
-    this.suitDish = suitDish;
+    this.feeling = feeling;
+    this.suitWho = suitWho;
+    this.suitEvent = suitEvent;
+    this.suitFood = suitFood;
   }
 
 }
