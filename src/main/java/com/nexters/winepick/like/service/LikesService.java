@@ -24,7 +24,7 @@ public class LikesService {
   private UserRepository userRepository;
 
   public List<WineResponse> getLikesWineList(Integer userId) {
-    return likesRepository.getLikesWineList(userId)
+    return likesRepository.findLikesByUserId(userId)
         .stream().map(WineResponse::of).collect(Collectors.toList());
   }
 
