@@ -36,7 +36,7 @@ public class Wine {
 
   private String category;
 
-  private String usage;
+  private String purpose;
 
   private String store;
 
@@ -67,7 +67,7 @@ public class Wine {
 
   @Builder
   public Wine(String nmKor, String nmEng, String country, Long price, String ingredient,
-      String category, String usage, double degree, String suitTemper, Integer sweetness,
+      String category, String purpose, double degree, String suitTemper, Integer sweetness,
       Integer acidity, Integer body, Integer tannin, String feeling, String suitWho,
       String suitEvent, String suitFood) {
     this.nmKor = nmKor;
@@ -76,7 +76,7 @@ public class Wine {
     this.price = price;
     this.ingredient = ingredient;
     this.category = category;
-    this.usage = usage;
+    this.purpose = purpose;
     this.degree = degree;
     this.suitTemper = suitTemper;
     this.sweetness = sweetness;
