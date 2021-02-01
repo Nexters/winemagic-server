@@ -3,8 +3,9 @@ package com.nexters.winepick.wine.api;
 import com.nexters.winepick.base.BaseDataJsonResponse;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import com.nexters.winepick.wine.service.WineService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,8 @@ public class WineController {
   private final WineService wineService;
 
   @GetMapping
-  public BaseDataJsonResponse<List<WineResponse>> getWineList() {
-    List<WineResponse> wines = wineService.getWineList();
+  public BaseDataJsonResponse<Page<WineResponse>> page(Pageable pageable) {
+    Page<WineResponse> wines = wineService.getWineList(pageable);
     return new BaseDataJsonResponse<>(200, "0", wines);
   }
 
@@ -28,6 +29,5 @@ public class WineController {
     WineResponse wine = wineService.getWine(wineId);
     return new BaseDataJsonResponse<>(200, "0", wine);
   }
-
 
 }
