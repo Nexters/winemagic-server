@@ -1,6 +1,6 @@
 package com.nexters.winepick.wine.api;
 
-import com.nexters.winepick.base.BaseDataJsonResponse;
+import com.nexters.winepick.base.BaseResponse;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import com.nexters.winepick.wine.service.WineService;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +19,15 @@ public class WineController {
   private final WineService wineService;
 
   @GetMapping
-  public BaseDataJsonResponse<Page<WineResponse>> page(Pageable pageable) {
+  public BaseResponse<Page<WineResponse>> page(Pageable pageable) {
     Page<WineResponse> wines = wineService.getWineList(pageable);
-    return new BaseDataJsonResponse<>(200, "0", wines);
+    return new BaseResponse<>(200, "0", wines);
   }
 
   @GetMapping("/{wineId}")
-  public BaseDataJsonResponse<WineResponse> getWine(@PathVariable Integer wineId) {
+  public BaseResponse<WineResponse> getWine(@PathVariable Integer wineId) {
     WineResponse wine = wineService.getWine(wineId);
-    return new BaseDataJsonResponse<>(200, "0", wine);
+    return new BaseResponse<>(200, "0", wine);
   }
 
 }

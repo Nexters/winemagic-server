@@ -1,7 +1,6 @@
 package com.nexters.winepick.like.api;
 
-import com.nexters.winepick.base.BaseDataJsonResponse;
-import com.nexters.winepick.base.BaseMsgJsonResponse;
+import com.nexters.winepick.base.BaseResponse;
 import com.nexters.winepick.like.service.LikesService;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import java.util.List;
@@ -21,21 +20,21 @@ public class LikesController {
   private final LikesService likesService;
 
   @GetMapping("/{userId}")
-  public BaseDataJsonResponse<List<WineResponse>> getLikesWineList(@PathVariable Integer userId) {
+  public BaseResponse<List<WineResponse>> getLikesWineList(@PathVariable Integer userId) {
     List<WineResponse> likes = likesService.getLikesWineList(userId);
-    return new BaseDataJsonResponse<>(200, "0", likes);
+    return new BaseResponse<>(200, "0", likes);
   }
 
   @PostMapping("/{userId}/{wineId}")
-  public BaseMsgJsonResponse addLike(@PathVariable Integer userId, @PathVariable Integer wineId) {
+  public BaseResponse addLike(@PathVariable Integer userId, @PathVariable Integer wineId) {
     likesService.addLike(userId, wineId);
-    return new BaseMsgJsonResponse(200, "0");
+    return new BaseResponse<>(200, "0", null);
   }
 
   @PutMapping("/{userId}/{wineId}")
-  public BaseMsgJsonResponse deleteLike(@PathVariable Integer userId, @PathVariable Integer wineId) {
+  public BaseResponse deleteLike(@PathVariable Integer userId, @PathVariable Integer wineId) {
     likesService.deleteLike(userId, wineId);
-    return new BaseMsgJsonResponse(200, "0");
+    return new BaseResponse<>(200, "0", null);
   }
 
 }
