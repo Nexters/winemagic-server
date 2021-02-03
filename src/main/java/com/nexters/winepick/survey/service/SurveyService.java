@@ -1,13 +1,10 @@
 package com.nexters.winepick.survey.service;
 
-import com.nexters.winepick.survey.api.dto.CreateSurveyResponse;
 import com.nexters.winepick.survey.domain.Survey;
 import com.nexters.winepick.survey.exception.SurveyNotFoundException;
 import com.nexters.winepick.survey.repository.SurveyRepository;
-import org.springframework.stereotype.Service;
 import lombok.Data;
-
-import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 @Data
