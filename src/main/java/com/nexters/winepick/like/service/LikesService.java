@@ -4,7 +4,7 @@ import com.nexters.winepick.like.domain.Likes;
 import com.nexters.winepick.like.domain.Likes.UseYn;
 import com.nexters.winepick.like.domain.LikesRepository;
 import com.nexters.winepick.user.domain.User;
-import com.nexters.winepick.user.domain.UserRepository;
+import com.nexters.winepick.user.repository.UserRepository;
 import com.nexters.winepick.user.exception.UserNotFoundException;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import com.nexters.winepick.wine.domain.Wine;

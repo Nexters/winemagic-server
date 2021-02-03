@@ -7,8 +7,7 @@
 -- values ('쁘띠폴리', 'Petites Folies', '프랑스', 18000, '멜롯 60%, 까베네 소비뇽 40%', '레드와인', '테이블 와인', 13.5, '이마트 24', '16-18', 1, 3, 3, 3, '찹스테이크, 양고기');
 --
 
-
-insert into user (email, nickname, age_range, gender, personality, access_token) values ('6230nana@gmail.com', '6230nana', 20, 'FEMALE', 'A', 'ㄴㅇㄹㄴㅇ');
+insert into user (email, nickname, age_range, gender, personality) values ('6230nana@gmail.com', '6230nana', 20, 'FEMALE', 'A');
 -- insert into user (email, age_range, gender) values ('eunhwan', 20, 'MALE');
 --
 --

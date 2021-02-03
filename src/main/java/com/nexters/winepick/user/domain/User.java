@@ -6,16 +6,8 @@ import com.nexters.winepick.constant.GenderType;
 import com.nexters.winepick.constant.PersonalityType;
 import com.nexters.winepick.like.domain.Likes;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +35,9 @@ public class User extends BaseEntity {
   @Column(name = "personality")
   private PersonalityType personalityType;
 
-  private String accessToken;
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinColumn(name = "token_id")
+  private List<Token> tokens;
 
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id")
