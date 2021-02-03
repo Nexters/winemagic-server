@@ -1,16 +1,17 @@
 package com.nexters.winepick.survey.domain;
 
 import com.nexters.winepick.base.BaseEntity;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Getter
-@NoArgsConstructor
-public class Survey extends BaseEntity {
+@Data
+public class Survey extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

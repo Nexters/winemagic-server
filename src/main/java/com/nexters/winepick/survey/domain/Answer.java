@@ -2,14 +2,14 @@ package com.nexters.winepick.survey.domain;
 
 import com.nexters.winepick.base.BaseEntity;
 import com.nexters.winepick.survey.api.constant.AnswerType;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@NoArgsConstructor
+@Data
 public class Answer extends BaseEntity {
 
     @Id

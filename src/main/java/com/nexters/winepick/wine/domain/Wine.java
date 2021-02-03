@@ -1,5 +1,6 @@
 package com.nexters.winepick.wine.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nexters.winepick.like.domain.Likes;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -35,7 +36,7 @@ public class Wine {
 
   private String category;
 
-  private String usage;
+  private String purpose;
 
   private String store;
 
@@ -59,12 +60,14 @@ public class Wine {
 
   private String suitFood;
 
-  @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "wine_id")
+  @JsonIgnore
   private List<Likes> likes;
 
   @Builder
   public Wine(String nmKor, String nmEng, String country, Long price, String ingredient,
-      String category, String usage, double degree, String suitTemper, Integer sweetness,
+      String category, String purpose, double degree, String suitTemper, Integer sweetness,
       Integer acidity, Integer body, Integer tannin, String feeling, String suitWho,
       String suitEvent, String suitFood) {
     this.nmKor = nmKor;
@@ -73,7 +76,7 @@ public class Wine {
     this.price = price;
     this.ingredient = ingredient;
     this.category = category;
-    this.usage = usage;
+    this.purpose = purpose;
     this.degree = degree;
     this.suitTemper = suitTemper;
     this.sweetness = sweetness;

@@ -1,5 +1,6 @@
 package com.nexters.winepick.survey.service;
 
+import com.nexters.winepick.survey.api.dto.CreateSurveyResponse;
 import com.nexters.winepick.survey.domain.Survey;
 import com.nexters.winepick.survey.repository.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class SurveyService {
         return surveyRepository.findById(surveyId);
     }
 
-    public Survey createSurveyWithAnswers(Survey survey) {
-        return surveyRepository.save(survey);
+    public CreateSurveyResponse createSurveyWithAnswers(Survey survey) {
+        return CreateSurveyResponse.of(surveyRepository.save(survey).getId());
     }
 }

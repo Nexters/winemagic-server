@@ -5,12 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-public class BaseMsgJsonResponse {
+@Data
+public class BaseResponse<T> {
     private int statusCode;
     private String message;
-
-    public BaseMsgJsonResponse(int statusCode, String message) {
-        this.statusCode = statusCode;
-        this.message = message;
-    }
+    private T data;
 }
