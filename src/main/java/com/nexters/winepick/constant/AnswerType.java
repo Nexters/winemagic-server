@@ -1,4 +1,4 @@
-package com.nexters.winepick.survey.api.constant;
+package com.nexters.winepick.constant;
 
 public enum AnswerType {
     // TODO => We might update answer types' information.

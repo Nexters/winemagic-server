@@ -1,8 +1,8 @@
 package com.nexters.winepick.user.api.dto;
 
-import com.nexters.winepick.base.PersonalityType;
+import com.nexters.winepick.constant.PersonalityType;
 import com.nexters.winepick.user.domain.User;
-import com.nexters.winepick.user.domain.User.Gender;
+import com.nexters.winepick.constant.GenderType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class UserResponse {
 
   private int ageRange;
 
-  private Gender gender;
+  private GenderType gender;
 
   private PersonalityType personality;
 

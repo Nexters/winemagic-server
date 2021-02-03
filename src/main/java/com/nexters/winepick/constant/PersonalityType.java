@@ -1,4 +1,4 @@
-package com.nexters.winepick.base;
+package com.nexters.winepick.constant;
 
 public enum PersonalityType {
 
