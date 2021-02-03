@@ -22,13 +22,13 @@ public class SurveyController {
     private final ModelMapper modelMapper;
 
     @PostMapping(path = "/")
-    public BaseResponse<CreateSurveyResponse> createSurvey(@RequestBody SurveyDTO surveyDTO) {
-        return new BaseResponse<>(200, "0", this.surveyService.createSurveyWithAnswers(
-                this.modelMapper.map(surveyDTO, Survey.class)));
+    public BaseResponse<Survey> createSurvey(@RequestBody SurveyDTO surveyDTO) {
+        return new BaseResponse<>(200, "0", this.modelMapper.map(this.surveyService.createSurveyWithAnswers(
+                this.modelMapper.map(surveyDTO, Survey.class)), Survey.class));
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/")
-    public Optional<Survey> getSurvey(Long id) {
-        return this.surveyService.getSurvey(id);
+    @GetMapping(path = "/{surveyId}")
+    public BaseResponse<Survey> getSurvey(@PathVariable Integer surveyId) {
+        return new BaseResponse<>(200, "0", this.modelMapper.map(this.surveyService.getSurvey(surveyId), Survey.class));
     }
 }
