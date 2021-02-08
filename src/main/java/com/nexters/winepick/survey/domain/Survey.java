@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Data
 public class Survey extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
