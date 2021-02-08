@@ -29,7 +29,7 @@ public class LikesController {
     return new BaseResponse<>(200, "0", likes);
   }
 
-  @PostMapping("/")
+  @PostMapping("")
   public BaseResponse addLike(@RequestBody LikesRequest likesRequest) {
     likesService.addLike(likesRequest);
     return new BaseResponse<>(200, "0", null);
