@@ -22,6 +22,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final com.nexters.winepick.base.QBaseEntity _super = new com.nexters.winepick.base.QBaseEntity(this);
 
+    public final StringPath accessToken = createString("accessToken");
+
     public final NumberPath<Integer> ageRange = createNumber("ageRange", Integer.class);
 
     //inherited
@@ -38,8 +40,6 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath nickname = createString("nickname");
 
     public final EnumPath<com.nexters.winepick.constant.PersonalityType> personalityType = createEnum("personalityType", com.nexters.winepick.constant.PersonalityType.class);
-
-    public final ListPath<Token, QToken> tokens = this.<Token, QToken>createList("tokens", Token.class, QToken.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
