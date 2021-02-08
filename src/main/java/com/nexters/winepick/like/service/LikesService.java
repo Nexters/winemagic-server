@@ -1,5 +1,6 @@
 package com.nexters.winepick.like.service;
 
+import com.nexters.winepick.like.api.dto.LikesRequest;
 import com.nexters.winepick.like.domain.Likes;
 import com.nexters.winepick.like.domain.Likes.UseYn;
 import com.nexters.winepick.like.domain.LikesRepository;
@@ -28,20 +29,20 @@ public class LikesService {
         .stream().map(WineResponse::of).collect(Collectors.toList());
   }
 
-  public void addLike(Integer userId, Integer wineId) {
+  public void addLike(LikesRequest request) {
     // 이미 이전에 좋아요 했던 경우
-    likesRepository.findLikesByUserIdAndWineId(userId, wineId)
+    likesRepository.findLikesByUserIdAndWineId(request.getUserId(), request.getWineId())
         .ifPresent(likes -> {
           likes.setUseYn(UseYn.Y);
           likesRepository.save(likes);
         });
 
     // 처음 좋아요 하는 경우
-    if (!likesRepository.existsLikesByUserIdAndWineId(userId, wineId)) {
-      Wine wine = wineRepository.findById(wineId)
-          .orElseThrow(() -> new WineNotFoundException(wineId));
-      User user = userRepository.findById(userId)
-          .orElseThrow(() -> new UserNotFoundException(userId));
+    if (!likesRepository.existsLikesByUserIdAndWineId(request.getUserId(), request.getWineId())) {
+      Wine wine = wineRepository.findById(request.getWineId())
+          .orElseThrow(() -> new WineNotFoundException(request.getWineId()));
+      User user = userRepository.findById(request.getUserId())
+          .orElseThrow(() -> new UserNotFoundException(request.getUserId()));
       likesRepository.save(Likes.of(user, wine, UseYn.Y));
     }
   }
