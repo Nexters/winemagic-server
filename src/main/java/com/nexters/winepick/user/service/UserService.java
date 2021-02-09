@@ -1,6 +1,8 @@
 package com.nexters.winepick.user.service;
 
+import com.nexters.winepick.user.api.dto.RenewAccessTokenDTO;
 import com.nexters.winepick.user.domain.User;
+import com.nexters.winepick.user.exception.UserInvalidAccessTokenException;
 import com.nexters.winepick.user.exception.UserNotFoundException;
 import com.nexters.winepick.user.repository.UserRepository;
 import lombok.Data;
@@ -16,7 +18,20 @@ public class UserService {
     }
 
     public User getUserByIdAndAccessToken(Integer userId, String accessToken) {
-        return this.userRepository.findUserByIdAndAccessToken(userId, accessToken)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        if (!user.getAccessToken().equals(accessToken)) {
+            throw new UserInvalidAccessTokenException(accessToken);
+        } else {
+            return user;
+        }
+    }
+
+    public User updateUserAccessToken(RenewAccessTokenDTO tokenDTO) {
+        User user = this.userRepository.findUserByAccessToken(tokenDTO.getExpiredAccessToken())
+                .orElseThrow(() -> new UserInvalidAccessTokenException(tokenDTO.getExpiredAccessToken()));
+
+        user.setAccessToken(tokenDTO.getNewAccessToken());
+
+        return this.userRepository.save(user);
     }
 }
