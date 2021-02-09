@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class WineService {
 
-  private WineRepository wineRepository;
+  private final WineRepository wineRepository;
 
   public Page<WineResponse> getWineList(Pageable pageable) {
-    Page<Wine> winePage = wineRepository.findAll(pageable);
+    Page<Wine> winePage = this.wineRepository.findAll(pageable);
     return winePage.map(WineResponse::of);
   }
 
   public WineResponse getWine(Integer wineId) {
-    Wine wine = wineRepository.findById(wineId)
+    Wine wine = this.wineRepository.findById(wineId)
         .orElseThrow(() -> new WineNotFoundException(wineId));
     return WineResponse.of(wine);
   }
