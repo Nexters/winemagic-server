@@ -40,7 +40,7 @@ public class WineService {
     Page<Wine> wines = wineRepositoryCustom
         .findByCondition(pageable, filter.get("wineName"), filter.get("category"),
             filter.get("food"), filter.get("store")
-            , Integer.parseInt(filter.get("start")), Integer.parseInt(filter.get("end")));
+            , filter.get("start"), filter.get("end"));
 
     if (!"".equals(filter.get("keyword"))) {
       List<KeywordResponse> searchWordList = keywordRepository.findByKeywordIn(keyword).stream()

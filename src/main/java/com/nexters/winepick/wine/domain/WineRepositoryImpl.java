@@ -18,7 +18,7 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
 
   @Override
   public Page<Wine> findByCondition(Pageable pageable, String wineName, String category,
-      String food, String store, Integer start, Integer end) {
+      String food, String store, String start, String end) {
 
     QueryResults<Wine> wines = queryFactory
         .selectFrom(wine)
@@ -74,10 +74,10 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
   }
 
   // 도수
-  private BooleanExpression degree(Integer start, Integer end) {
-    if (start == 0 || end == 0) {
+  private BooleanExpression degree(String start, String end) {
+    if (StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) {
       return null;
     }
-    return wine.degree.between(start, end);
+    return wine.degree.between(Integer.parseInt(start), Integer.parseInt(end));
   }
 }
