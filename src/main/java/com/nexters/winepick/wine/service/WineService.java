@@ -36,16 +36,6 @@ public class WineService {
   }
 
   public Page<WineResponse> findWineByKeyword(List<String> keyword, Map<String, String> filter, Pageable pageable) {
-    System.out.println(filter.size());
-    System.out.println(filter.get("keyword"));
-    System.out.println(keyword.size());
-    System.out.println(filter.get("wineName"));
-    System.out.println(filter.get("category")); // 와인 종류
-    System.out.println(filter.get("food")); // 같이 먹는 음식
-    System.out.println(filter.get("store")); // 판매 가게
-    System.out.println(filter.get("start")); // 도수 시작
-    System.out.println(filter.get("end")); // 도수 끝
-
     // 와인 찾고..
     Page<Wine> wines = wineRepositoryCustom
         .findByCondition(pageable, filter.get("wineName"), filter.get("category"),
