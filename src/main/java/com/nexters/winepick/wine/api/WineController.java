@@ -23,13 +23,13 @@ public class WineController {
 
   @GetMapping
   public BaseResponse<Page<WineResponse>> page(Pageable pageable) {
-    Page<WineResponse> wines = wineService.getWineList(pageable);
+    Page<WineResponse> wines = this.wineService.getWineList(pageable);
     return new BaseResponse<>(200, "0", wines);
   }
 
   @GetMapping("/{wineId}")
   public BaseResponse<WineResponse> getWine(@PathVariable Integer wineId) {
-    WineResponse wine = wineService.getWine(wineId);
+    WineResponse wine = this.wineService.getWine(wineId);
     return new BaseResponse<>(200, "0", wine);
   }
 

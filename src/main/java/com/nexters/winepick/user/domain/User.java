@@ -9,13 +9,14 @@ import java.util.List;
 import javax.persistence.*;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 @Entity
-@Getter
 @NoArgsConstructor
+@Data
 public class User extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +36,7 @@ public class User extends BaseEntity {
   @Column(name = "personality")
   private PersonalityType personalityType;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "token_id")
-  private List<Token> tokens;
+  private String accessToken;
 
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id")
