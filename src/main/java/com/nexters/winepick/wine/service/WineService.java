@@ -64,4 +64,10 @@ public class WineService {
 
     return wines.map(WineResponse::of);
   }
+
+  public Page<WineResponse> getWineListByQuickKeyword(String keyword, Pageable pageable) {
+    String[] names = keywordRepository.findSearchWordByKeyword(keyword).split(",");
+    Page<Wine> winePage = wineRepository.findByNmKorIn(names, pageable);
+    return winePage.map(WineResponse::of);
+  }
 }

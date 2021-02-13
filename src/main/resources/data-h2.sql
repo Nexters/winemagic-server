@@ -4,7 +4,7 @@ insert into wine (nm_kor, nm_eng, country, price, ingredient, category, purpose,
 values ('쁘띠폴리', 'Petites Folies', '프랑스', 18000, '멜롯 60%, 까베네 소비뇽 40%', '레드와인', '테이블 와인', 13.5, '이마트 24', '16-18', 1, 3, 3, 3, '밝은 루비색을 띠고 있으며 잘 익은 체리의 달콤하고 풍부한 향과 실크처럼 부드럽게 다듬어진 탄닌의 맛이 느껴지는 와인', '찹스테이크, 양고기');
 
 insert into wine (nm_kor, nm_eng, country, price, ingredient, category, purpose, degree, store, suit_temper, sweetness, acidity, body, tannin, feeling,  suit_food)
-values ('쁘띠폴리', 'Petites Folies', '프랑스', 18000, '멜롯 60%, 까베네 소비뇽 40%', '레드와인', '테이블 와인', 13.5, '이마트 24', '16-18', 1, 3, 3, 3, '', '갈비찜');
+values ('까시예로 델 디아블로', 'Petites Folies', '프랑스', 18000, '멜롯 60%, 까베네 소비뇽 40%', '레드와인', '테이블 와인', 13.5, '이마트 24', '16-18', 1, 3, 3, 3, '', '갈비찜');
 
 
 
@@ -26,3 +26,4 @@ insert into keyword(keyword, search_word) values ('쌉싸름한', '드라이');
 
 insert into keyword(keyword, search_word) values('고기', '각종 육류,갈비찜,갈비구이,붉은 고기류,불고기 요리,양고기,소스가 진한 육류,한우 구이류,불고기,갈비찜,그릴에 구운 고기,비프 스튜,붉은 육류,보쌈,바비큐 요리,푸아그라,살라미,찹스테이크,소시지 구이,가금류 고기,돼지고기 요리,오리고기,송아지 요리,육회');
 
+insert into keyword(keyword, search_word) values('혼자 집에서 쉴 때', '까시예로 델 디아블로,가또 네그로,솔데빼냐스,에라주리즈 넘버나인 크로이처,칸티 모스카토 콜레지오네 디 파밀리아,네이처 사운드 쉬라즈');

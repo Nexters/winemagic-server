@@ -39,4 +39,10 @@ public class WineController {
     return new BaseResponse<>(200, "0", wines);
   }
 
+  @GetMapping("/keyword")
+  public BaseResponse<Page<WineResponse>> quickSearch(@RequestParam String keyword,Pageable pageable) {
+    Page<WineResponse> wines = wineService.getWineListByQuickKeyword(keyword, pageable);
+    return new BaseResponse<>(200, "0", wines);
+  }
+
 }
