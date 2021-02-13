@@ -23,7 +23,7 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
 
     QueryResults<Wine> wines = queryFactory
         .selectFrom(wine)
-        .where((eqNmKor(wineName).or(eqNmEng(wineName)))
+        .where(eqName(wineName)
             , eqCategory(category)
             , likeFood(food)
             , likeStore(store)
@@ -35,19 +35,11 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
   }
 
   // 한국이름
-  private BooleanExpression eqNmKor(String wineName) {
+  private BooleanExpression eqName(String wineName) {
     if (StringUtils.isEmpty(wineName)) {
       return null;
     }
-    return wine.nmKor.eq(wineName);
-  }
-
-  // 영어 이름
-  private BooleanExpression eqNmEng(String wineName) {
-    if (StringUtils.isEmpty(wineName)) {
-      return null;
-    }
-    return wine.nmEng.eq(wineName);
+    return wine.nmKor.eq(wineName).or(wine.nmEng.eq(wineName));
   }
 
   // category
@@ -58,7 +50,7 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
     return wine.category.eq(category);
   }
 
-  // category
+  // 음식
   private BooleanBuilder likeFood(String[] foods) {
     if (StringUtils.isEmpty(foods)) {
       return null;
