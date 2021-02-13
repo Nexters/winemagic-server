@@ -2,6 +2,7 @@ package com.nexters.winepick.wine.domain;
 
 import static com.nexters.winepick.wine.domain.QWine.wine;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,7 +19,7 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
 
   @Override
   public Page<Wine> findByCondition(Pageable pageable, String wineName, String category,
-      String food, String store, String start, String end) {
+      String[] food, String store, String start, String end) {
 
     QueryResults<Wine> wines = queryFactory
         .selectFrom(wine)
@@ -58,11 +59,15 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
   }
 
   // category
-  private BooleanExpression likeFood(String food) {
-    if (StringUtils.isEmpty(food)) {
+  private BooleanBuilder likeFood(String[] foods) {
+    if (StringUtils.isEmpty(foods)) {
       return null;
     }
-    return wine.suitFood.contains(food);
+    BooleanBuilder b = new BooleanBuilder();
+    for(String food : foods) {
+      b.or(wine.suitFood.contains(food));
+    }
+    return b;
   }
 
   // 가게

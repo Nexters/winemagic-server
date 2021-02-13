@@ -7,6 +7,7 @@ import com.nexters.winepick.wine.domain.Wine;
 import com.nexters.winepick.wine.domain.WineRepository;
 import com.nexters.winepick.wine.domain.WineRepositoryCustom;
 import com.nexters.winepick.wine.exception.WineNotFoundException;
+import io.micrometer.core.instrument.util.StringUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,10 +37,16 @@ public class WineService {
   }
 
   public Page<WineResponse> findWineByKeyword(List<String> keyword, Map<String, String> filter, Pageable pageable) {
+
+    String[] food = null;
+    if(!StringUtils.isEmpty(filter.get("food"))) {
+      food = keywordRepository.findSearchWordByKeyword(filter.get("food")).split(",");
+    }
+
     // 와인 찾고..
     Page<Wine> wines = wineRepositoryCustom
         .findByCondition(pageable, filter.get("wineName"), filter.get("category"),
-            filter.get("food"), filter.get("store")
+            food, filter.get("store")
             , filter.get("start"), filter.get("end"));
 
     if (!"".equals(filter.get("keyword"))) {

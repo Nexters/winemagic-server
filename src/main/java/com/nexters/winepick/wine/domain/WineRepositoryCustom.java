@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface WineRepositoryCustom {
 
-  Page<Wine> findByCondition(Pageable pageable, String wineName, String category, String food, String store,
+  Page<Wine> findByCondition(Pageable pageable, String wineName, String category, String[] food, String store,
       String start, String end);
 
 }
