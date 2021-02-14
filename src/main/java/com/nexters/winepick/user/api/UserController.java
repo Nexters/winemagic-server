@@ -30,6 +30,11 @@ public class UserController {
             this.userService.getUserByIdAndAccessToken(userId, accessToken));
   }
 
+  @GetMapping(path = "/{accessToken}")
+  public BaseResponse<User> getUserIdByAccessToken(@PathVariable String accessToken) {
+    return new BaseResponse<>(200, "0", this.userService.getUserIdByAccessToken(accessToken));
+  }
+
   @PostMapping(path = "/accessToken")
   public BaseResponse<User> updateUserAccessToken(@RequestBody RenewAccessTokenDTO tokenDTO) {
     return new BaseResponse<>(200, "0",

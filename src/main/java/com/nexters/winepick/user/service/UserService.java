@@ -26,6 +26,10 @@ public class UserService {
         }
     }
 
+    public User getUserIdByAccessToken(String accessToken) {
+        return this.userRepository.findUserByAccessToken(accessToken).orElseThrow(() -> new UserInvalidAccessTokenException(accessToken));
+    }
+
     public User updateUserAccessToken(RenewAccessTokenDTO tokenDTO) {
         User user = this.userRepository.findUserByAccessToken(tokenDTO.getExpiredAccessToken())
                 .orElseThrow(() -> new UserInvalidAccessTokenException(tokenDTO.getExpiredAccessToken()));

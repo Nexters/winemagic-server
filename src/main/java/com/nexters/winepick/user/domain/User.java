@@ -40,7 +40,6 @@ public class User extends BaseEntity {
 
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id")
-  @JsonIgnore
   private List<Likes> likes;
 
   @Builder
