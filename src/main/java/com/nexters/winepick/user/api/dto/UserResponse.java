@@ -18,14 +18,12 @@ public class UserResponse {
 
   private String nickname;
 
-  private int ageRange;
+  private PersonalityType personalityType;
 
-  private GenderType gender;
-
-  private PersonalityType personality;
+  private Integer likes;
 
   public static UserResponse of(User user) {
-    return new UserResponse(user.getId(), user.getEmail(), user.getNickname(), user.getAgeRange(),
-        user.getGender(), user.getPersonalityType());
+    return new UserResponse(user.getId(), user.getEmail(), user.getNickname(), user.getPersonalityType(),
+            user.getLikes().size());
   }
 }
