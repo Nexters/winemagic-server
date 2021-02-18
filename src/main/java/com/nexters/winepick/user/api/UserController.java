@@ -18,6 +18,11 @@ public class UserController {
   private final UserService userService;
   private final ModelMapper modelMapper;
 
+  @GetMapping("/")
+  public String test() {
+    return "Hello World";
+  }
+
   @PostMapping(path = "/")
   public BaseResponse<UserResponse> createUser(@RequestBody UserDTO userDTO) {
     UserResponse user = userService.createUserEntity(userDTO);
