@@ -1,7 +1,6 @@
 package com.nexters.winepick.wine.api.dto;
 
 import com.nexters.winepick.wine.domain.Wine;
-import java.nio.charset.Charset;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -3,14 +3,12 @@ package com.nexters.winepick.wine.domain;
 import static com.nexters.winepick.wine.domain.QWine.wine;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 @RequiredArgsConstructor
 public class WineRepositoryImpl implements WineRepositoryCustom {
@@ -18,25 +16,25 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
   private final JPAQueryFactory queryFactory;
 
   @Override
-  public Page<Wine> findByCondition(Pageable pageable, String wineName, String category,
+  public List<Wine> findByCondition(Pageable pageable, String wineName, String category,
       String[] food, String store, String start, String end) {
 
-    QueryResults<Wine> wines = queryFactory
+    List<Wine> wines = queryFactory
         .selectFrom(wine)
         .where(eqName(wineName)
             , eqCategory(category)
             , likeFood(food)
             , likeStore(store)
             , degree(start, end))
-        .fetchResults();
+        .fetch();
 
-    return new PageImpl<>(wines.getResults(), pageable, wines.getTotal());
+    return wines;
 
   }
 
   // 한국이름
   private BooleanExpression eqName(String wineName) {
-    if (StringUtils.isEmpty(wineName)) {
+    if (ObjectUtils.isEmpty(wineName)) {
       return null;
     }
     return wine.nmKor.eq(wineName).or(wine.nmEng.eq(wineName));
@@ -44,7 +42,7 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
 
   // category
   private BooleanExpression eqCategory(String category) {
-    if (StringUtils.isEmpty(category)) {
+    if (ObjectUtils.isEmpty(category)) {
       return null;
     }
     return wine.category.eq(category);
@@ -52,7 +50,7 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
 
   // 음식
   private BooleanBuilder likeFood(String[] foods) {
-    if (StringUtils.isEmpty(foods)) {
+    if (ObjectUtils.isEmpty(foods)) {
       return null;
     }
     BooleanBuilder b = new BooleanBuilder();
@@ -64,7 +62,7 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
 
   // 가게
   private BooleanExpression likeStore(String store) {
-    if (StringUtils.isEmpty(store)) {
+    if (ObjectUtils.isEmpty(store)) {
       return null;
     }
     return wine.store.contains(store);
@@ -72,7 +70,7 @@ public class WineRepositoryImpl implements WineRepositoryCustom {
 
   // 도수
   private BooleanExpression degree(String start, String end) {
-    if (StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) {
+    if (ObjectUtils.isEmpty(start) || ObjectUtils.isEmpty(end)) {
       return null;
     }
     return wine.degree.between(Integer.parseInt(start), Integer.parseInt(end));

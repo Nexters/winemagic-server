@@ -7,7 +7,6 @@ import com.nexters.winepick.wine.domain.Wine;
 import com.nexters.winepick.wine.domain.WineRepository;
 import com.nexters.winepick.wine.domain.WineRepositoryCustom;
 import com.nexters.winepick.wine.exception.WineNotFoundException;
-import io.micrometer.core.instrument.util.StringUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @AllArgsConstructor
 @Service
@@ -37,32 +37,32 @@ public class WineService {
   }
 
   public Page<WineResponse> findWineByKeyword(List<String> keyword, Map<String, String> filter, Pageable pageable) {
-
     String[] food = null;
-    if(!StringUtils.isEmpty(filter.get("food"))) {
+    if(!ObjectUtils.isEmpty(filter.get("food"))) {
       food = keywordRepository.findSearchWordByKeyword(filter.get("food")).split(",");
     }
 
     // 와인 찾고..
-    Page<Wine> wines = wineRepositoryCustom
+    List<WineResponse> wines = wineRepositoryCustom
         .findByCondition(pageable, filter.get("wineName"), filter.get("category"),
-            food, filter.get("store")
-            , filter.get("start"), filter.get("end"));
+            food, filter.get("store"), filter.get("start"), filter.get("end")).stream().map(WineResponse::of).collect(
+            Collectors.toList());
+
+    int start = (int) pageable.getOffset();;
+    int end = 0;
 
     if (!"".equals(filter.get("keyword"))) {
       List<KeywordResponse> searchWordList = keywordRepository.findByKeywordIn(keyword).stream()
           .map(KeywordResponse::of).collect(Collectors.toList());
       List<WineResponse> filteredByKeyword = wines.stream().filter(t -> searchWordList.stream()
-          .anyMatch(s -> t.getFeeling().contains(s.getSearchWord()))).map(WineResponse::of)
-          .collect(Collectors.toList());
+          .anyMatch(s -> t.getFeeling().contains(s.getSearchWord()))).collect(Collectors.toList());
 
-      int start = (int) pageable.getOffset();
-      int end = (start + pageable.getPageSize()) > filteredByKeyword.size() ? filteredByKeyword.size() : (start + pageable.getPageSize());
+      end = (start + pageable.getPageSize()) > filteredByKeyword.size() ? filteredByKeyword.size() : (start + pageable.getPageSize());
 
       return new PageImpl<>(filteredByKeyword.subList(start, end), pageable, filteredByKeyword.size());
     }
-
-    return wines.map(WineResponse::of);
+    end = (start + pageable.getPageSize()) > wines.size() ? wines.size() : (start + pageable.getPageSize());
+    return new PageImpl<>(wines.subList(start, end), pageable, wines.size());
   }
 
   public Page<WineResponse> getWineListByQuickKeyword(String keyword, Pageable pageable) {
