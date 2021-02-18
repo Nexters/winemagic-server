@@ -14,16 +14,14 @@ public class UserResponse {
 
   private Integer id;
 
-  private String email;
+  private PersonalityType personality;
 
-  private String nickname;
-
-  private PersonalityType personalityType;
+  private String accessToken;
 
   private Integer likes;
 
   public static UserResponse of(User user) {
-    return new UserResponse(user.getId(), user.getEmail(), user.getNickname(), user.getPersonalityType(),
-            user.getLikes().size());
+    return new UserResponse(user.getId(), user.getPersonalityType(), user.getAccessToken(),
+        user.getLikes().size());
   }
 }

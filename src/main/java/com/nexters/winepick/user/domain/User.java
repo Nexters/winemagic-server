@@ -45,12 +45,12 @@ public class User extends BaseEntity {
   private List<Likes> likes;
 
   @Builder
-  public User(String email, int ageRange, GenderType gender) {
-    Assert.hasText(email, "bankName must not be empty");
-    Assert.hasText(Integer.toString(ageRange), "accountNumber must not be empty");
-    Assert.hasText(gender.toString(), "accountHolder must not be empty");
-    this.email = email;
-    this.ageRange = ageRange;
-    this.gender = gender;
+  public User(String accessToken, PersonalityType personalityType, List<Likes> likes) {
+//    Assert.hasText(email, "bankName must not be empty");
+//    Assert.hasText(Integer.toString(ageRange), "accountNumber must not be empty");
+//    Assert.hasText(gender.toString(), "accountHolder must not be empty");
+    this.accessToken = accessToken;
+    this.personalityType = personalityType;
+    this.likes = likes;
   }
 }

@@ -8,6 +8,8 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/survey")
 @Data
@@ -25,5 +27,10 @@ public class SurveyController {
     @GetMapping(path = "/{surveyId}")
     public BaseResponse<Survey> getSurvey(@PathVariable Integer surveyId) {
         return new BaseResponse<>(200, "0", this.modelMapper.map(this.surveyService.getSurvey(surveyId), Survey.class));
+    }
+
+    @GetMapping(path = "/")
+    public BaseResponse<List<Survey>> getSurveyAll() {
+        return new BaseResponse<>(200, "0", this.surveyService.getSurveyAll());
     }
 }

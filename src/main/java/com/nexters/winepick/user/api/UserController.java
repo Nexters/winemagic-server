@@ -19,14 +19,16 @@ public class UserController {
   private final ModelMapper modelMapper;
 
   @PostMapping(path = "/")
-  public BaseResponse<User> createUser(@RequestBody UserDTO userDTO) {
-    return new BaseResponse<>(200, "0",
-            this.userService.createUserEntity(this.modelMapper.map(userDTO, User.class)));
+  public BaseResponse<UserResponse> createUser(@RequestBody UserDTO userDTO) {
+    UserResponse user = userService.createUserEntity(userDTO);
+    return new BaseResponse<>(200, "0", user);
   }
 
-  @GetMapping(path = "/me/{accessToken}")
-  public BaseResponse<UserResponse> getUserByAccessToken(@PathVariable String accessToken) {
-    return new BaseResponse<>(200, "0", UserResponse.of(this.userService.getUserIdByAccessToken(accessToken)));
+  @GetMapping(path = "/{userId}/{accessToken}")
+  public BaseResponse<UserResponse> getUserByIdAndAccessToken(@PathVariable Integer userId,
+                                                      @PathVariable String accessToken) {
+    UserResponse user = userService.getUserByIdAndAccessToken(userId, accessToken);
+    return new BaseResponse<>(200, "0", user);
   }
 
   @PutMapping(path = "/me/{accessToken}")
