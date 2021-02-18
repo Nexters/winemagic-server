@@ -31,9 +31,11 @@ public class UserController {
     return new BaseResponse<>(200, "0", user);
   }
 
-  @PostMapping(path = "/accessToken")
-  public BaseResponse<User> updateUserAccessToken(@RequestBody RenewAccessTokenDTO tokenDTO) {
+  @PutMapping(path = "/me/{accessToken}")
+  public BaseResponse<UserResponse> updateUserEntity(
+          @PathVariable String accessToken,
+          @RequestBody UserDTO userDTO) {
     return new BaseResponse<>(200, "0",
-            this.userService.updateUserAccessToken(tokenDTO));
+            UserResponse.of(this.userService.updateUserEntity(accessToken, userDTO)));
   }
 }

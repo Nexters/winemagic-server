@@ -25,19 +25,19 @@ public class LikesController {
 
   @GetMapping("/{userId}")
   public BaseResponse<List<WineResponse>> getLikesWineList(@PathVariable Integer userId) {
-    List<WineResponse> likes = likesService.getLikesWineList(userId);
+    List<WineResponse> likes = this.likesService.getLikesWineList(userId);
     return new BaseResponse<>(200, "0", likes);
   }
 
   @PostMapping("")
   public BaseResponse addLike(@RequestBody LikesRequest likesRequest) {
-    likesService.addLike(likesRequest);
+    this.likesService.addLike(likesRequest);
     return new BaseResponse<>(200, "0", null);
   }
 
   @PutMapping("/{userId}/{wineId}")
   public BaseResponse deleteLike(@PathVariable Integer userId, @PathVariable Integer wineId) {
-    likesService.deleteLike(userId, wineId);
+    this.likesService.deleteLike(userId, wineId);
     return new BaseResponse<>(200, "0", null);
   }
 

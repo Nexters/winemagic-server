@@ -36,6 +36,7 @@ public class User extends BaseEntity {
   @Column(name = "personality")
   private PersonalityType personalityType;
 
+  @Column(name = "access_token", unique = true)
   private String accessToken;
 
   @OneToMany(cascade = CascadeType.ALL)

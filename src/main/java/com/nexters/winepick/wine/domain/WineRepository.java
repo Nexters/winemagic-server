@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WineRepository extends JpaRepository<Wine, Integer> {
   Page<Wine> findAll(Pageable pageable);
+
+  Page<Wine> findByNmKorIn(String[] nmKor, Pageable pageable);
 }
