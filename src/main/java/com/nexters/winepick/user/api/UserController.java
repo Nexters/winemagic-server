@@ -3,6 +3,7 @@ package com.nexters.winepick.user.api;
 import com.nexters.winepick.base.BaseResponse;
 import com.nexters.winepick.user.api.dto.RenewAccessTokenDTO;
 import com.nexters.winepick.user.api.dto.UserDTO;
+import com.nexters.winepick.user.api.dto.UserResponse;
 import com.nexters.winepick.user.domain.User;
 import com.nexters.winepick.user.service.UserService;
 import lombok.Data;
@@ -18,16 +19,16 @@ public class UserController {
   private final ModelMapper modelMapper;
 
   @PostMapping(path = "/")
-  public BaseResponse<User> createUser(@RequestBody UserDTO userDTO) {
-    return new BaseResponse<>(200, "0",
-            this.userService.createUserEntity(this.modelMapper.map(userDTO, User.class)));
+  public BaseResponse<UserResponse> createUser(@RequestBody UserDTO userDTO) {
+    UserResponse user = userService.createUserEntity(userDTO);
+    return new BaseResponse<>(200, "0", user);
   }
 
   @GetMapping(path = "/{userId}/{accessToken}")
-  public BaseResponse<User> getUserByIdAndAccessToken(@PathVariable Integer userId,
+  public BaseResponse<UserResponse> getUserByIdAndAccessToken(@PathVariable Integer userId,
                                                       @PathVariable String accessToken) {
-    return new BaseResponse<>(200, "0",
-            this.userService.getUserByIdAndAccessToken(userId, accessToken));
+    UserResponse user = userService.getUserByIdAndAccessToken(userId, accessToken);
+    return new BaseResponse<>(200, "0", user);
   }
 
   @PostMapping(path = "/accessToken")

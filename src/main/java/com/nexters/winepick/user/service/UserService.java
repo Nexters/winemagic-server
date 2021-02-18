@@ -1,10 +1,14 @@
 package com.nexters.winepick.user.service;
 
+import com.nexters.winepick.like.domain.LikesRepository;
 import com.nexters.winepick.user.api.dto.RenewAccessTokenDTO;
+import com.nexters.winepick.user.api.dto.UserDTO;
+import com.nexters.winepick.user.api.dto.UserResponse;
 import com.nexters.winepick.user.domain.User;
 import com.nexters.winepick.user.exception.UserInvalidAccessTokenException;
 import com.nexters.winepick.user.exception.UserNotFoundException;
 import com.nexters.winepick.user.repository.UserRepository;
+import java.util.ArrayList;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +16,24 @@ import org.springframework.stereotype.Service;
 @Data
 public class UserService {
     private final UserRepository userRepository;
+    private final LikesRepository likesRepository;
 
-    public User createUserEntity(User user) {
-        return this.userRepository.save(user);
+    public UserResponse createUserEntity(UserDTO userDTO) {
+        User user = userRepository.save(User.builder()
+            .accessToken(userDTO.getAccessToken())
+            .personalityType(userDTO.getPersonalityType())
+            .likes(new ArrayList<>())
+            .build());
+        return UserResponse.of(user);
     }
 
-    public User getUserByIdAndAccessToken(Integer userId, String accessToken) {
+    public UserResponse getUserByIdAndAccessToken(Integer userId, String accessToken) {
         User user = this.userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         if (!user.getAccessToken().equals(accessToken)) {
             throw new UserInvalidAccessTokenException(accessToken);
         } else {
-            return user;
+            user.setLikes(likesRepository.findLikesByUserIdAndUseYn(userId));
+            return UserResponse.of(user);
         }
     }
 
