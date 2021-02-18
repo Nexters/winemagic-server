@@ -6,6 +6,8 @@ import com.nexters.winepick.survey.repository.SurveyRepository;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Data
 public class SurveyService {
@@ -18,5 +20,9 @@ public class SurveyService {
 
     public Survey createSurveyWithAnswers(Survey survey) {
         return surveyRepository.save(survey);
+    }
+
+    public List<Survey> getSurveyAll() {
+        return this.surveyRepository.findAll();
     }
 }
