@@ -30,28 +30,17 @@ public class LikesService {
   }
 
   public void addLike(LikesRequest request) {
-    // 이미 이전에 좋아요 했던 경우
-    this.likesRepository.findLikesByUserIdAndWineId(request.getUserId(), request.getWineId())
-        .ifPresent(likes -> {
-          likes.setUseYn(UseYn.Y);
-          this.likesRepository.save(likes);
-        });
-
-    // 처음 좋아요 하는 경우
-    if (!this.likesRepository.existsLikesByUserIdAndWineId(request.getUserId(), request.getWineId())) {
-      Wine wine = this.wineRepository.findById(request.getWineId())
-          .orElseThrow(() -> new WineNotFoundException(request.getWineId()));
-      User user = this.userRepository.findById(request.getUserId())
-          .orElseThrow(() -> new UserNotFoundException(request.getUserId()));
-      this.likesRepository.save(Likes.of(user, wine, UseYn.Y));
-    }
+    Wine wine = this.wineRepository.findById(request.getWineId())
+        .orElseThrow(() -> new WineNotFoundException(request.getWineId()));
+    User user = this.userRepository.findById(request.getUserId())
+        .orElseThrow(() -> new UserNotFoundException(request.getUserId()));
+    this.likesRepository.save(Likes.of(user, wine, UseYn.Y));
   }
 
   public void deleteLike(Integer userId, Integer wineId) {
     likesRepository.findLikesByUserIdAndWineId(userId, wineId)
         .ifPresent(likes -> {
-          likes.setUseYn(UseYn.N);
-          likesRepository.save(likes);
+          likesRepository.delete(likes);
         });
   }
 
