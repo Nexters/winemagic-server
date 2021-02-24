@@ -18,7 +18,7 @@ public class SurveyController {
     private final SurveyService surveyService;
     private final ModelMapper modelMapper;
 
-    @PostMapping(path = "/")
+    @PostMapping
     public BaseResponse<Survey> createSurvey(@RequestBody SurveyDTO surveyDTO) {
         return new BaseResponse<>(200, "0", this.modelMapper.map(this.surveyService.createSurveyWithAnswers(
                 this.modelMapper.map(surveyDTO, Survey.class)), Survey.class));
@@ -29,7 +29,7 @@ public class SurveyController {
         return new BaseResponse<>(200, "0", this.modelMapper.map(this.surveyService.getSurvey(surveyId), Survey.class));
     }
 
-    @GetMapping(path = "/")
+    @GetMapping
     public BaseResponse<List<Survey>> getSurveyAll() {
         return new BaseResponse<>(200, "0", this.surveyService.getSurveyAll());
     }
