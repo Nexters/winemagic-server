@@ -31,14 +31,16 @@ public class UserController {
 
   @GetMapping(path = "/{userId}/{accessToken}")
   public BaseResponse<UserResponse> getUserByIdAndAccessToken(@PathVariable Integer userId,
-                                                      @PathVariable String accessToken) {
+      @PathVariable String accessToken) {
     UserResponse user = userService.getUserByIdAndAccessToken(userId, accessToken);
     return new BaseResponse<>(200, "0", user);
   }
 
-  @PostMapping(path = "/accessToken")
-  public BaseResponse<User> updateUserAccessToken(@RequestBody RenewAccessTokenDTO tokenDTO) {
+  @PutMapping(path = "/me/{accessToken}")
+  public BaseResponse<UserResponse> updateUserEntity(
+      @PathVariable String accessToken,
+      @RequestBody UserDTO userDTO) {
     return new BaseResponse<>(200, "0",
-            this.userService.updateUserAccessToken(tokenDTO));
+        UserResponse.of(this.userService.updateUserEntity(accessToken, userDTO)));
   }
 }
