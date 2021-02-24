@@ -30,6 +30,12 @@ public class WineResponse {
 
   private Integer tannin;
 
+  private String feeling;
+
+  private String suitWho;
+
+  private String suitEvent;
+
   private String suitFood;
 
   private Integer likes;
@@ -37,7 +43,7 @@ public class WineResponse {
   public static WineResponse of(Wine wine) {
     return new WineResponse(wine.getId(), wine.getNmKor(), wine.getNmEng(), wine.getCountry(),
         wine.getPrice(), wine.getCategory(), wine.getSweetness(), wine.getAcidity(), wine.getBody(),
-        wine.getTannin(), wine.getSuitFood(), wine.getLikes().size());
+        wine.getTannin(), wine.getFeeling(), wine.getSuitWho(), wine.getSuitEvent(),
+        wine.getSuitFood(), wine.getLikes().size());
   }
-
 }

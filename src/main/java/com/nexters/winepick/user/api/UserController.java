@@ -31,7 +31,7 @@ public class UserController {
 
   @GetMapping(path = "/{userId}/{accessToken}")
   public BaseResponse<UserResponse> getUserByIdAndAccessToken(@PathVariable Integer userId,
-      @PathVariable String accessToken) {
+                                                      @PathVariable String accessToken) {
     UserResponse user = userService.getUserByIdAndAccessToken(userId, accessToken);
     return new BaseResponse<>(200, "0", user);
   }
@@ -39,6 +39,6 @@ public class UserController {
   @PostMapping(path = "/accessToken")
   public BaseResponse<User> updateUserAccessToken(@RequestBody RenewAccessTokenDTO tokenDTO) {
     return new BaseResponse<>(200, "0",
-        this.userService.updateUserAccessToken(tokenDTO));
+            this.userService.updateUserAccessToken(tokenDTO));
   }
 }

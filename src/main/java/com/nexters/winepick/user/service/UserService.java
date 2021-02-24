@@ -10,12 +10,14 @@ import com.nexters.winepick.user.exception.UserNotFoundException;
 import com.nexters.winepick.user.repository.UserRepository;
 import java.util.ArrayList;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @Data
 public class UserService {
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
     private final LikesRepository likesRepository;
 
     public UserResponse createUserEntity(UserDTO userDTO) {
@@ -37,12 +39,13 @@ public class UserService {
         }
     }
 
-    public User updateUserAccessToken(RenewAccessTokenDTO tokenDTO) {
-        User user = this.userRepository.findUserByAccessToken(tokenDTO.getExpiredAccessToken())
-                .orElseThrow(() -> new UserInvalidAccessTokenException(tokenDTO.getExpiredAccessToken()));
+    public User updateUserEntity(String accessToken, UserDTO userDTO) {
+        User user = this.userRepository.findUserByAccessToken(accessToken)
+                .orElseThrow(() -> new UserInvalidAccessTokenException(accessToken));
 
-        user.setAccessToken(tokenDTO.getNewAccessToken());
+        user.setAccessToken(userDTO.getAccessToken());
+        user.setPersonalityType(userDTO.getPersonalityType());
 
-        return this.userRepository.save(user);
+        return user;
     }
 }
