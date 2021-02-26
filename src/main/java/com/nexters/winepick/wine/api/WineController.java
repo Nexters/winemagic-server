@@ -38,14 +38,16 @@ public class WineController {
   }
 
   @GetMapping("/filter")
-  public BaseResponse<Page<WineResponse>> search(@RequestParam List<String> keyword, @RequestParam HashMap<String, String> filter, Pageable pageable) {
-    Page<WineResponse> wines = wineService.findWineByKeyword(keyword, filter, pageable);
+  public BaseResponse<Page<WineResponse>> search(HttpServletRequest req, @RequestParam List<String> keyword, @RequestParam HashMap<String, String> filter, Pageable pageable) {
+    String accessToken = req.getHeader(HttpHeaders.AUTHORIZATION);
+    Page<WineResponse> wines = wineService.findWineByKeyword(accessToken, keyword, filter, pageable);
     return new BaseResponse<>(200, "0", wines);
   }
 
   @GetMapping("/keyword")
-  public BaseResponse<Page<WineResponse>> quickSearch(@RequestParam String keyword,Pageable pageable) {
-    Page<WineResponse> wines = wineService.getWineListByQuickKeyword(keyword, pageable);
+  public BaseResponse<Page<WineResponse>> quickSearch(HttpServletRequest req, @RequestParam String keyword,Pageable pageable) {
+    String accessToken = req.getHeader(HttpHeaders.AUTHORIZATION);
+    Page<WineResponse> wines = wineService.getWineListByQuickKeyword(accessToken, keyword, pageable);
     return new BaseResponse<>(200, "0", wines);
   }
 

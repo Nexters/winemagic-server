@@ -1,6 +1,5 @@
 package com.nexters.winepick.wine.service;
 
-import com.nexters.winepick.like.domain.Likes;
 import com.nexters.winepick.like.domain.LikesRepository;
 import com.nexters.winepick.user.domain.User;
 import com.nexters.winepick.user.exception.UserInvalidAccessTokenException;
@@ -8,7 +7,6 @@ import com.nexters.winepick.user.repository.UserRepository;
 import com.nexters.winepick.wine.api.dto.KeywordResponse;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import com.nexters.winepick.wine.domain.KeywordRepository;
-import com.nexters.winepick.wine.domain.Wine;
 import com.nexters.winepick.wine.domain.WineRepository;
 import com.nexters.winepick.wine.domain.WineRepositoryCustom;
 import com.nexters.winepick.wine.exception.WineNotFoundException;
@@ -33,22 +31,9 @@ public class WineService {
   private LikesRepository likesRepository;
 
   public Page<WineResponse> getWineList(String accessToken, Pageable pageable) {
-    Page<Wine> winePage = wineRepository.findAll(pageable);
-
-    if (!ObjectUtils.isEmpty(accessToken)) {
-      User user = userRepository.findUserByAccessToken(accessToken)
-          .orElseThrow(() -> new UserInvalidAccessTokenException(accessToken));
-      List<Integer> likes = likesRepository.findWineIdByUserId(user.getId());
-
-      Page<WineResponse> wine = winePage.map(WineResponse::of);
-      wine.forEach(w -> {
-        if (likes.contains(w.getId())) {
-          w.setLikeYn(true);
-        }
-      });
-      return wine;
-    }
-    return winePage.map(WineResponse::of);
+    List<WineResponse> wines = wineRepository.findAll().stream().map(WineResponse::of).collect(
+        Collectors.toList());
+    return verifyUserLikedYn(accessToken, wines, pageable);
   }
 
   public WineResponse getWine(String accessToken, Integer wineId) {
@@ -66,9 +51,10 @@ public class WineService {
     return wine;
   }
 
-  public Page<WineResponse> findWineByKeyword(List<String> keyword, Map<String, String> filter, Pageable pageable) {
+  public Page<WineResponse> findWineByKeyword(String accessToken, List<String> keyword, Map<String, String> filter, Pageable pageable) {
+
     String[] food = null;
-    if(!ObjectUtils.isEmpty(filter.get("food"))) {
+    if (!ObjectUtils.isEmpty(filter.get("food"))) {
       food = keywordRepository.findSearchWordByKeyword(filter.get("food")).split(",");
     }
 
@@ -77,26 +63,41 @@ public class WineService {
             food, filter.get("store"), filter.get("start"), filter.get("end")).stream().map(WineResponse::of).collect(
             Collectors.toList());
 
-    int start = (int) pageable.getOffset();;
-    int end = 0;
-
     if (!"".equals(filter.get("keyword"))) {
       List<KeywordResponse> searchWordList = keywordRepository.findByKeywordIn(keyword).stream()
           .map(KeywordResponse::of).collect(Collectors.toList());
       List<WineResponse> filteredByKeyword = wines.stream().filter(t -> searchWordList.stream()
           .anyMatch(s -> t.getFeeling().contains(s.getSearchWord()))).collect(Collectors.toList());
 
-      end = (start + pageable.getPageSize()) > filteredByKeyword.size() ? filteredByKeyword.size() : (start + pageable.getPageSize());
-
-      return new PageImpl<>(filteredByKeyword.subList(start, end), pageable, filteredByKeyword.size());
+      return verifyUserLikedYn(accessToken, filteredByKeyword, pageable);
     }
-    end = (start + pageable.getPageSize()) > wines.size() ? wines.size() : (start + pageable.getPageSize());
-    return new PageImpl<>(wines.subList(start, end), pageable, wines.size());
+    return verifyUserLikedYn(accessToken, wines, pageable);
   }
 
-  public Page<WineResponse> getWineListByQuickKeyword(String keyword, Pageable pageable) {
+  public Page<WineResponse> getWineListByQuickKeyword(String accessToken, String keyword, Pageable pageable) {
     String[] names = keywordRepository.findSearchWordByKeyword(keyword).split(",");
-    Page<Wine> winePage = wineRepository.findByNmKorIn(names, pageable);
-    return winePage.map(WineResponse::of);
+    List<WineResponse> wines = wineRepository.findByNmKorIn(names).stream().map(WineResponse::of).collect(
+        Collectors.toList());
+    return verifyUserLikedYn(accessToken, wines, pageable);
+  }
+
+
+  public Page<WineResponse> verifyUserLikedYn(String accessToken, List<WineResponse> wineResponseList, Pageable pageable) {
+    if (!ObjectUtils.isEmpty(accessToken)) {
+      User user = userRepository.findUserByAccessToken(accessToken)
+          .orElseThrow(() -> new UserInvalidAccessTokenException(accessToken));
+      List<Integer> likes = likesRepository.findWineIdByUserId(user.getId());
+      wineResponseList.forEach(w -> {
+        if (likes.contains(w.getId())) {
+          w.setLikeYn(true);
+        }
+      });
+    }
+
+    int start = (int) pageable.getOffset();;
+    int end = 0;
+    end = (start + pageable.getPageSize()) > wineResponseList.size() ? wineResponseList.size() : (start + pageable.getPageSize());
+
+    return new PageImpl<>(wineResponseList.subList(start, end), pageable, wineResponseList.size());
   }
 }
