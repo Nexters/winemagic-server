@@ -1,5 +1,10 @@
 package com.nexters.winepick.wine.service;
 
+import com.nexters.winepick.like.domain.Likes;
+import com.nexters.winepick.like.domain.LikesRepository;
+import com.nexters.winepick.user.domain.User;
+import com.nexters.winepick.user.exception.UserInvalidAccessTokenException;
+import com.nexters.winepick.user.repository.UserRepository;
 import com.nexters.winepick.wine.api.dto.KeywordResponse;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import com.nexters.winepick.wine.domain.KeywordRepository;
@@ -24,16 +29,41 @@ public class WineService {
   private WineRepository wineRepository;
   private KeywordRepository keywordRepository;
   private WineRepositoryCustom wineRepositoryCustom;
+  private UserRepository userRepository;
+  private LikesRepository likesRepository;
 
-  public Page<WineResponse> getWineList(Pageable pageable) {
+  public Page<WineResponse> getWineList(String accessToken, Pageable pageable) {
     Page<Wine> winePage = wineRepository.findAll(pageable);
+
+    if (!ObjectUtils.isEmpty(accessToken)) {
+      User user = userRepository.findUserByAccessToken(accessToken)
+          .orElseThrow(() -> new UserInvalidAccessTokenException(accessToken));
+      List<Integer> likes = likesRepository.findWineIdByUserId(user.getId());
+
+      Page<WineResponse> wine = winePage.map(WineResponse::of);
+      wine.forEach(w -> {
+        if (likes.contains(w.getId())) {
+          w.setLikeYn(true);
+        }
+      });
+      return wine;
+    }
     return winePage.map(WineResponse::of);
   }
 
-  public WineResponse getWine(Integer wineId) {
-    Wine wine = wineRepository.findById(wineId)
-        .orElseThrow(() -> new WineNotFoundException(wineId));
-    return WineResponse.of(wine);
+  public WineResponse getWine(String accessToken, Integer wineId) {
+    WineResponse wine = WineResponse.of(wineRepository.findById(wineId)
+        .orElseThrow(() -> new WineNotFoundException(wineId)));
+
+    if (!ObjectUtils.isEmpty(accessToken)) {
+      User user = userRepository.findUserByAccessToken(accessToken)
+          .orElseThrow(() -> new UserInvalidAccessTokenException(accessToken));
+
+      if (likesRepository.existsLikesByWineIdAndUserId(wineId, user.getId())) {
+        wine.setLikeYn(true);
+      }
+    }
+    return wine;
   }
 
   public Page<WineResponse> findWineByKeyword(List<String> keyword, Map<String, String> filter, Pageable pageable) {
@@ -42,7 +72,6 @@ public class WineService {
       food = keywordRepository.findSearchWordByKeyword(filter.get("food")).split(",");
     }
 
-    // 와인 찾고..
     List<WineResponse> wines = wineRepositoryCustom
         .findByCondition(pageable, filter.get("wineName"), filter.get("category"),
             food, filter.get("store"), filter.get("start"), filter.get("end")).stream().map(WineResponse::of).collect(
