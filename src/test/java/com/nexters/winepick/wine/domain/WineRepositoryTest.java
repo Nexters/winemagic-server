@@ -25,16 +25,16 @@ public class WineRepositoryTest {
     assertThat(wineRepository.findAll().size()).isEqualTo(3);
   }
 
-  @Test
-  void 이름으로_와인_조회() {
-    String nmKor = "G7 멜롯";
-
-    Pageable page = PageRequest.of(0, 3);
-    Wine wine = wineRepository.findByNmKorIn(new String[] {nmKor}, page).toList().get(0);
-
-    assertThat(wine.getNmKor()).isEqualTo("G7 멜롯");
-    assertThat(wine.getCountry()).isEqualTo("칠레");
-    assertThat(wine.getDegree()).isGreaterThan(10);
-  }
+//  @Test
+//  void 이름으로_와인_조회() {
+//    String nmKor = "G7 멜롯";
+//
+//    Pageable page = PageRequest.of(0, 3);
+//    Wine wine = wineRepository.findByNmKorIn(new String[] {nmKor}, page).toList().get(0);
+//
+//    assertThat(wine.getNmKor()).isEqualTo("G7 멜롯");
+//    assertThat(wine.getCountry()).isEqualTo("칠레");
+//    assertThat(wine.getDegree()).isGreaterThan(10);
+//  }
 
 }
