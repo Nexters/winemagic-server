@@ -29,7 +29,7 @@ public class ResultResponse {
 
   public static ResultResponse of(Result result) {
     return new ResultResponse(result.getPersonalityType(), result.getSubDesc(),
-        result.getDescription(), result.getKeyword1(), result.getKeyword1(), result.getMatchWine(),
+        result.getDescription(), result.getKeyword1(), result.getKeyword2(), result.getMatchWine(),
         result.getFeature(), result.getScore());
   }
 
