@@ -4,6 +4,7 @@ import com.nexters.winepick.wine.domain.Wine;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
@@ -40,10 +41,13 @@ public class WineResponse {
 
   private Integer likes;
 
+  @Setter
+  private boolean likeYn;
+
   public static WineResponse of(Wine wine) {
     return new WineResponse(wine.getId(), wine.getNmKor(), wine.getNmEng(), wine.getCountry(),
         wine.getPrice(), wine.getCategory(), wine.getSweetness(), wine.getAcidity(), wine.getBody(),
         wine.getTannin(), wine.getFeeling(), wine.getSuitWho(), wine.getSuitEvent(),
-        wine.getSuitFood(), wine.getLikes().size());
+        wine.getSuitFood(), wine.getLikes().size(), wine.isLikeYn());
   }
 }

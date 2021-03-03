@@ -1,18 +1,19 @@
 package com.nexters.winepick.survey.api.dto;
 
-
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-
-@Data
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class SurveyDTO {
+    private Integer id;
+
     private String content;
 
-    private List<AnswerDTO> answers;
+    private String answerA;
+
+    private String answerB;
+
 }

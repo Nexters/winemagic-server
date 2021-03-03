@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -63,6 +64,9 @@ public class Wine {
   @JoinColumn(name = "wine_id")
   @JsonIgnore
   private List<Likes> likes;
+
+  @Transient
+  private boolean likeYn;
 
   @Builder
   public Wine(String nmKor, String nmEng, String country, Long price, String ingredient,

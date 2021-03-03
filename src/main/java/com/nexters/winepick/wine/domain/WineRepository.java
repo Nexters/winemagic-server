@@ -1,13 +1,13 @@
 package com.nexters.winepick.wine.domain;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WineRepository extends JpaRepository<Wine, Integer> {
   @EntityGraph(attributePaths = "likes")
-  Page<Wine> findAll(Pageable pageable);
+  List<Wine> findAll();
 
-  Page<Wine> findByNmKorIn(String[] nmKor, Pageable pageable);
+  List<Wine> findByNmKorIn(String[] nmKor);
 }

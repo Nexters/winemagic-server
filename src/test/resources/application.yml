@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /v2/api
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    data: classpath:data-h2.sql
+  jpa:
+    #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true

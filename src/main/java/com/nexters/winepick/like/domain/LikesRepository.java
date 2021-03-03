@@ -14,7 +14,10 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
   @Query("select l from Likes l where l.user.id = :userId and l.useYn = 'Y'")
   List<Likes> findLikesByUserIdAndUseYn(@Param("userId") Integer userId);
 
-  boolean existsLikesByUserIdAndWineId(Integer userId, Integer wineId);
+  @Query("select l.wine.id from Likes l where l.user.id = :userId")
+  List<Integer> findWineIdByUserId(@Param("userId") Integer userId);
+
+  boolean existsLikesByWineIdAndUserId(Integer wineId, Integer userId);
 
   Optional<Likes> findLikesByUserIdAndWineId(Integer userId, Integer wineId);
 }

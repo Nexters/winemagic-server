@@ -27,6 +27,7 @@ public class WebMVConfig implements WebMvcConfigurer {
                                 "/survey/**",
                                 "/result/**",
                                 "/h2-console",
+                                "/wine/**",
                                 "/swagger-resources/**",
                                 "/swagger-ui.html",
                                 "/webjars/**"
