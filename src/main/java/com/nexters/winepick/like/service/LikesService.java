@@ -25,8 +25,12 @@ public class LikesService {
   private final UserRepository userRepository;
 
   public List<WineResponse> getLikesWineList(Integer userId) {
-    return this.likesRepository.findLikesByUserId(userId)
+    List<WineResponse> likeList = likesRepository.findLikesByUserId(userId)
         .stream().map(WineResponse::of).collect(Collectors.toList());
+    likeList.forEach(l -> {
+      l.setLikeYn(true);
+    });
+    return likeList;
   }
 
   public void addLike(LikesRequest request) {
