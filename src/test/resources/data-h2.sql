@@ -7,7 +7,7 @@ INSERT INTO wine (acidity,body,category,country,`degree`,feeling,ingredient,nm_e
 INSERT INTO wine (acidity,body,category,country,`degree`,feeling,ingredient,nm_eng,nm_kor,price,purpose,store,suit_event,suit_food,suit_temper,suit_who,sweetness,tannin) VALUES
 (3,3,'레드','스페인',12.0,'붉은 베리 향과 부드럽게 펼쳐지는 탄닌으로 적절한 산미가 특징인 와인','템프라니요,그르나쉬 블렌딩','Destino Tinto','데스티노 띤또',6900,'테이블 와인','이마트 24','','돼지고기, 파스타, 양갈비','16~18도','',1,3);
 
-insert into user (email, nickname, age_range, gender, personality) values ('6230nana@gmail.com', '6230nana', 20, 'FEMALE', 'A');
+insert into user (personality) values ('A');
 
 insert into keyword(keyword, search_word) values ('달콤한', '초콜릿');
 insert into keyword(keyword, search_word) values ('달콤한', '달콤');

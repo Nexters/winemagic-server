@@ -7,6 +7,7 @@ import com.nexters.winepick.config.TestConfig;
 import com.nexters.winepick.constant.PersonalityType;
 import com.nexters.winepick.user.exception.UserInvalidAccessTokenException;
 import com.nexters.winepick.user.repository.UserRepository;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,7 @@ public class UserRepositoryTest {
   void init() {
     user = userRepository.save(User.builder()
         .accessToken("accessToken")
+        .userId(BigInteger.valueOf(12356878))
         .personalityType(PersonalityType.A)
         .likes(new ArrayList<>())
         .build());
