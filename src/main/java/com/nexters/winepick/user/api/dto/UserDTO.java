@@ -1,15 +1,12 @@
 package com.nexters.winepick.user.api.dto;
 
-import com.nexters.winepick.constant.GenderType;
 import com.nexters.winepick.constant.PersonalityType;
-import lombok.Data;
+import java.math.BigInteger;
+import lombok.Getter;
 
-@Data
+@Getter
 public class UserDTO {
-    private String email;
-    private String nickname;
-    private int ageRange;
-    private GenderType gender;
+    private BigInteger userId;
     private PersonalityType personalityType;
     private String accessToken;
 }

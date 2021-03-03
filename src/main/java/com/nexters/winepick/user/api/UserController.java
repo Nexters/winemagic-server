@@ -1,10 +1,8 @@
 package com.nexters.winepick.user.api;
 
 import com.nexters.winepick.base.BaseResponse;
-import com.nexters.winepick.user.api.dto.RenewAccessTokenDTO;
 import com.nexters.winepick.user.api.dto.UserDTO;
 import com.nexters.winepick.user.api.dto.UserResponse;
-import com.nexters.winepick.user.domain.User;
 import com.nexters.winepick.user.service.UserService;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
@@ -18,12 +16,7 @@ public class UserController {
   private final UserService userService;
   private final ModelMapper modelMapper;
 
-  @GetMapping("/")
-  public String test() {
-    return "Hello World";
-  }
-
-  @PostMapping(path = "/")
+  @PostMapping(path = "")
   public BaseResponse<UserResponse> createUser(@RequestBody UserDTO userDTO) {
     UserResponse user = userService.createUserEntity(userDTO);
     return new BaseResponse<>(200, "0", user);

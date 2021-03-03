@@ -2,17 +2,15 @@ package com.nexters.winepick.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nexters.winepick.base.BaseEntity;
-import com.nexters.winepick.constant.GenderType;
 import com.nexters.winepick.constant.PersonalityType;
 import com.nexters.winepick.like.domain.Likes;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.*;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.util.Assert;
 
 @Entity
 @NoArgsConstructor
@@ -22,15 +20,7 @@ public class User extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  private String email;
-
-  private String nickname;
-
-  private int ageRange;
-
-  @Enumerated(EnumType.STRING)
-  @Column(name = "gender")
-  private GenderType gender;
+  private BigInteger userId;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "personality")
@@ -45,11 +35,9 @@ public class User extends BaseEntity {
   private List<Likes> likes;
 
   @Builder
-  public User(String accessToken, PersonalityType personalityType, List<Likes> likes) {
-//    Assert.hasText(email, "bankName must not be empty");
-//    Assert.hasText(Integer.toString(ageRange), "accountNumber must not be empty");
-//    Assert.hasText(gender.toString(), "accountHolder must not be empty");
+  public User(String accessToken, BigInteger userId, PersonalityType personalityType, List<Likes> likes) {
     this.accessToken = accessToken;
+    this.userId = userId;
     this.personalityType = personalityType;
     this.likes = likes;
   }
