@@ -4,6 +4,7 @@ import com.nexters.winepick.like.api.dto.LikesRequest;
 import com.nexters.winepick.like.domain.Likes;
 import com.nexters.winepick.like.domain.Likes.UseYn;
 import com.nexters.winepick.like.domain.LikesRepository;
+import com.nexters.winepick.like.exception.LikeDuplicatedException;
 import com.nexters.winepick.user.domain.User;
 import com.nexters.winepick.user.repository.UserRepository;
 import com.nexters.winepick.user.exception.UserNotFoundException;
@@ -27,25 +28,26 @@ public class LikesService {
   public List<WineResponse> getLikesWineList(Integer userId) {
     List<WineResponse> likeList = likesRepository.findLikesByUserId(userId)
         .stream().map(WineResponse::of).collect(Collectors.toList());
-    likeList.forEach(l -> {
-      l.setLikeYn(true);
-    });
+    likeList.forEach(l -> l.setLikeYn(true));
     return likeList;
   }
 
   public void addLike(LikesRequest request) {
-    Wine wine = this.wineRepository.findById(request.getWineId())
+    if (likesRepository.existsLikesByWineIdAndUserId(request.getWineId(), request.getUserId())) {
+      throw new LikeDuplicatedException();
+    }
+
+    Wine wine = wineRepository.findById(request.getWineId())
         .orElseThrow(() -> new WineNotFoundException(request.getWineId()));
-    User user = this.userRepository.findById(request.getUserId())
+    User user = userRepository.findById(request.getUserId())
         .orElseThrow(() -> new UserNotFoundException(request.getUserId()));
-    this.likesRepository.save(Likes.of(user, wine, UseYn.Y));
+
+    likesRepository.save(Likes.of(user, wine, UseYn.Y));
   }
 
   public void deleteLike(Integer userId, Integer wineId) {
     likesRepository.findLikesByUserIdAndWineId(userId, wineId)
-        .ifPresent(likes -> {
-          likesRepository.delete(likes);
-        });
+        .ifPresent(likes -> likesRepository.delete(likes));
   }
 
 }
