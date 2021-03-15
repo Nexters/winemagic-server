@@ -19,9 +19,13 @@ public class WineResponse {
 
   private String country;
 
+  private String store;
+
   private Long price;
 
   private String category;
+
+  private String purpose;
 
   private Integer sweetness;
 
@@ -46,8 +50,8 @@ public class WineResponse {
 
   public static WineResponse of(Wine wine) {
     return new WineResponse(wine.getId(), wine.getNmKor(), wine.getNmEng(), wine.getCountry(),
-        wine.getPrice(), wine.getCategory(), wine.getSweetness(), wine.getAcidity(), wine.getBody(),
-        wine.getTannin(), wine.getFeeling(), wine.getSuitWho(), wine.getSuitEvent(),
-        wine.getSuitFood(), wine.getLikes().size(), wine.isLikeYn());
+        wine.getStore(), wine.getPrice(), wine.getCategory(), wine.getPurpose(), wine.getSweetness(),
+        wine.getAcidity(), wine.getBody(), wine.getTannin(), wine.getFeeling(), wine.getSuitWho(),
+        wine.getSuitEvent(), wine.getSuitFood(), wine.getLikes().size(), wine.isLikeYn());
   }
 }
