@@ -5,20 +5,20 @@ import com.nexters.winepick.survey.domain.Result;
 import com.nexters.winepick.survey.exception.ResultNotFoundException;
 import com.nexters.winepick.survey.repository.ResultRepository;
 import com.nexters.winepick.user.repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class ResultService {
 
-  private ResultRepository resultRepository;
-  private UserRepository userRepository;
+  private final ResultRepository resultRepository;
+  private final UserRepository userRepository;
 
   public ResultResponse getResult(String accessToken, Integer resultId) {
     Result result = resultRepository.findById(resultId)
-        .orElseThrow(() -> new ResultNotFoundException());
+        .orElseThrow(ResultNotFoundException::new);
 
     if (!ObjectUtils.isEmpty(accessToken)) {
       userRepository.findUserByAccessToken(accessToken)

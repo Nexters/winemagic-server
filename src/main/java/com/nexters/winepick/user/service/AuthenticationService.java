@@ -3,11 +3,11 @@ package com.nexters.winepick.user.service;
 import com.nexters.winepick.user.domain.User;
 import com.nexters.winepick.user.exception.UserInvalidAccessTokenException;
 import com.nexters.winepick.user.repository.UserRepository;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@Data
+@RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
 

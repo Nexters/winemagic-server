@@ -13,22 +13,22 @@ import com.nexters.winepick.wine.exception.WineNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class WineService {
 
-  private WineRepository wineRepository;
-  private KeywordRepository keywordRepository;
-  private WineRepositoryCustom wineRepositoryCustom;
-  private UserRepository userRepository;
-  private LikesRepository likesRepository;
+  private final WineRepository wineRepository;
+  private final KeywordRepository keywordRepository;
+  private final WineRepositoryCustom wineRepositoryCustom;
+  private final UserRepository userRepository;
+  private final LikesRepository likesRepository;
 
   public Page<WineResponse> getWineList(String accessToken, Pageable pageable) {
     List<WineResponse> wines = wineRepository.findAll().stream().map(WineResponse::of).collect(

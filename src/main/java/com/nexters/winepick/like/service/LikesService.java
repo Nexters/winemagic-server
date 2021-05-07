@@ -15,10 +15,11 @@ import com.nexters.winepick.wine.exception.WineNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class LikesService {
 
   private final LikesRepository likesRepository;
@@ -47,7 +48,6 @@ public class LikesService {
 
   public void deleteLike(Integer userId, Integer wineId) {
     likesRepository.findLikesByUserIdAndWineId(userId, wineId)
-        .ifPresent(likes -> likesRepository.delete(likes));
+        .ifPresent(likesRepository::delete);
   }
-
 }

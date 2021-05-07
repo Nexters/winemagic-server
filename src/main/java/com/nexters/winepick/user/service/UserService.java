@@ -8,16 +8,16 @@ import com.nexters.winepick.user.exception.UserInvalidAccessTokenException;
 import com.nexters.winepick.user.exception.UserNotFoundException;
 import com.nexters.winepick.user.repository.UserRepository;
 import java.util.ArrayList;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-  private UserRepository userRepository;
-  private LikesRepository likesRepository;
+  private final UserRepository userRepository;
+  private final LikesRepository likesRepository;
 
   public UserResponse createUserEntity(UserDTO userDTO) {
     User user = userRepository.findUserByUserId(userDTO.getUserId());
