@@ -8,7 +8,6 @@ import com.nexters.winepick.wine.api.dto.KeywordResponse;
 import com.nexters.winepick.wine.api.dto.WineResponse;
 import com.nexters.winepick.wine.domain.KeywordRepository;
 import com.nexters.winepick.wine.domain.WineRepository;
-import com.nexters.winepick.wine.domain.WineRepositoryCustom;
 import com.nexters.winepick.wine.exception.WineNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,6 @@ public class WineService {
 
   private final WineRepository wineRepository;
   private final KeywordRepository keywordRepository;
-  private final WineRepositoryCustom wineRepositoryCustom;
   private final UserRepository userRepository;
   private final LikesRepository likesRepository;
 
@@ -58,7 +56,7 @@ public class WineService {
       food = keywordRepository.findSearchWordByKeyword(filter.get("food")).split(",");
     }
 
-    List<WineResponse> wines = wineRepositoryCustom
+    List<WineResponse> wines = wineRepository
         .findByCondition(pageable, filter.get("wineName"), filter.get("category"),
             food, filter.get("store"), filter.get("start"), filter.get("end")).stream().map(WineResponse::of).collect(
             Collectors.toList());

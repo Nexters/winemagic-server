@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface WineRepository extends JpaRepository<Wine, Integer> {
+public interface WineRepository extends JpaRepository<Wine, Integer>, WineRepositoryCustom {
   @EntityGraph(attributePaths = "likes")
   List<Wine> findAll();
 
